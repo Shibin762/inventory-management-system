@@ -1,0 +1,105 @@
+<div id="products-page" class="page" style="display: none;">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Products</h2>
+            <div>
+              
+                <button class="btn btn-primary" onclick="Products.showProductModal()">Add Product</button>
+            </div>
+        </div>
+        
+        <!-- Search and Filters -->
+        <div class="search-filters">
+            <input type="text" class="form-control search-input" id="product-search" placeholder="Search products...">
+            <select class="form-control" id="category-filter">
+                <option value="">All Categories</option>
+            </select>
+            <select class="form-control" id="stock-filter">
+                <option value="">All Stock Levels</option>
+                <option value="true">Low Stock Only</option>
+            </select>
+            <select class="form-control" id="sort-by">
+                <option value="name">Sort by Name</option>
+                <option value="sku">Sort by SKU</option>
+                <option value="unit_price">Sort by Price</option>
+                <option value="quantity_in_stock">Sort by Stock</option>
+            </select>
+        </div>
+        
+        <!-- Products Table -->
+        <div class="card">
+            <div class="card-body">
+                <div id="products-container">
+                    <p class="text-center">Loading products...</p>
+                </div>
+                <div id="products-pagination"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Product Modal -->
+    <div id="product-modal" class="modal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="product-modal-title">Add Product</h5>
+                    <button type="button" class="close" onclick="Products.closeProductModal()">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="product-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="product-sku" class="form-label">SKU *</label>
+                                <input type="text" class="form-control" id="product-sku" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="product-category" class="form-label">Category</label>
+                                <select class="form-control" id="product-category">
+                                    <option value="">Select Category</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="product-name" class="form-label">Product Name *</label>
+                            <input type="text" class="form-control" id="product-name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="product-description" class="form-label">Description</label>
+                            <textarea class="form-control" id="product-description" rows="3"></textarea>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="product-price" class="form-label">Unit Price *</label>
+                                <input type="number" class="form-control" id="product-price" step="0.01" min="0" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="product-stock" class="form-label">Current Stock</label>
+                                <input type="number" class="form-control" id="product-stock" min="0" value="0">
+                            </div>
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="product-reorder-level" class="form-label">Reorder Level</label>
+                                <input type="number" class="form-control" id="product-reorder-level" min="0" value="10">
+                            </div>
+                            <div class="form-group">
+                                <label for="product-reorder-qty" class="form-label">Reorder Quantity</label>
+                                <input type="number" class="form-control" id="product-reorder-qty" min="0" value="50">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="Products.closeProductModal()">Cancel</button>
+                    <button type="submit" form="product-form" class="btn btn-primary">Save Product</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

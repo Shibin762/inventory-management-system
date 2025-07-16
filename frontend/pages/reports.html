@@ -1,0 +1,130 @@
+<div id="reports-page" class="page" style="display: none;">
+    <div class="container-fluid">
+        <h2 class="mb-4">Reports</h2>
+        
+        <!-- Report Type Selector -->
+        <div class="form-group">
+            <label for="report-type" class="form-label">Select Report Type</label>
+            <select class="form-control" id="report-type" style="max-width: 300px;">
+                <option value="inventory">Inventory Report</option>
+                <option value="supplier">Supplier Performance</option>
+                <option value="reorder">Reorder Suggestions</option>
+                <option value="movement">Stock Movements</option>
+            </select>
+        </div>
+        
+        <!-- Inventory Report -->
+        <div id="inventory-report" class="report-section">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Inventory Report</h5>
+                </div>
+                <div class="card-body" id="inventory-report-content">
+                    <p class="text-center">Loading report...</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Supplier Performance Report -->
+        <div id="supplier-report" class="report-section" style="display: none;">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Supplier Performance Report</h5>
+                </div>
+                <div class="card-body" id="supplier-report-content">
+                    <p class="text-center">Loading report...</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Reorder Suggestions Report -->
+        <div id="reorder-report" class="report-section" style="display: none;">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Reorder Suggestions</h5>
+                </div>
+                <div class="card-body" id="reorder-report-content">
+                    <p class="text-center">Loading report...</p>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Stock Movements Report -->
+        <div id="movement-report" class="report-section" style="display: none;">
+            <div class="card">
+                <div class="card-header">
+                    <h5 class="card-title">Stock Movements Report</h5>
+                </div>
+                <div class="card-body">
+                    <!-- Filters -->
+                    <div class="search-filters mb-3">
+                        <select class="form-control" id="movement-product-filter">
+                            <option value="">All Products</option>
+                        </select>
+                        <input type="date" class="form-control" id="movement-from-date" placeholder="From Date">
+                        <input type="date" class="form-control" id="movement-to-date" placeholder="To Date">
+                        <select class="form-control" id="movement-type-filter">
+                            <option value="">All Types</option>
+                            <option value="in">In</option>
+                            <option value="out">Out</option>
+                            <option value="adjustment">Adjustment</option>
+                        </select>
+                        <button class="btn btn-primary" onclick="Reports.loadMovementReport()">Apply Filters</button>
+                    </div>
+                    <div id="movement-report-content">
+                        <p class="text-center">Loading report...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- View Modal (shared) -->
+    <div id="view-modal" class="modal">
+        <div class="modal-dialog" style="max-width: 600px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Details</h5>
+                    <button type="button" class="close" onclick="this.closest('.modal').classList.remove('show')">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="view-modal-content">
+                    <!-- Dynamic content -->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="this.closest('.modal').classList.remove('show')">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="app">
+    <!-- Header -->
+    <header class="header">
+        <div class="container-fluid">
+            <nav class="navbar">
+                <a href="#" class="navbar-brand">Inventory Management System</a>
+                <ul class="navbar-nav">
+                    <li><a href="#dashboard" class="nav-link active" data-page="dashboard">Dashboard</a></li>
+                    <li><a href="#products" class="nav-link" data-page="products">Products</a></li>
+                    <li><a href="#suppliers" class="nav-link" data-page="suppliers">Suppliers</a></li>
+                    <li><a href="#orders" class="nav-link" data-page="orders">Orders</a></li>
+                    <li><a href="#reports" class="nav-link" data-page="reports">Reports</a></li>
+                </ul>
+                <div class="user-menu">
+                    <span id="user-display"></span>
+                    <button class="btn btn-sm btn-danger" onclick="App.logout()">Logout</button>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <!-- Alert Container -->
+    <div id="alert-container"></div>
+    
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Page content will be loaded here dynamically -->
+    </main>
+</div>

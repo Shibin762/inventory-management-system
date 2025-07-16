@@ -1,0 +1,82 @@
+<div id="orders-page" class="page" style="display: none;">
+    <div class="container-fluid">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>Purchase Orders</h2>
+            <button class="btn btn-primary" onclick="Orders.showOrderModal()">Create Order</button>
+        </div>
+        
+        <!-- Filters -->
+        <div class="search-filters">
+            <select class="form-control" id="order-status-filter">
+                <option value="">All Status</option>
+                <option value="pending">Pending</option>
+                <option value="confirmed">Confirmed</option>
+                <option value="delivered">Delivered</option>
+                <option value="cancelled">Cancelled</option>
+            </select>
+            <select class="form-control" id="order-supplier-filter">
+                <option value="">All Suppliers</option>
+            </select>
+        </div>
+        
+        <!-- Orders Table -->
+        <div class="card">
+            <div class="card-body">
+                <div id="orders-container">
+                    <p class="text-center">Loading orders...</p>
+                </div>
+                <div id="orders-pagination"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Order Modal -->
+    <div id="order-modal" class="modal">
+        <div class="modal-dialog" style="max-width: 800px;">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Create Purchase Order</h5>
+                    <button type="button" class="close" onclick="Orders.closeOrderModal()">
+                        <span>&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="order-form">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="order-supplier" class="form-label">Supplier *</label>
+                                <select class="form-control" id="order-supplier" required>
+                                    <option value="">Select Supplier</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="order-delivery" class="form-label">Expected Delivery</label>
+                                <input type="date" class="form-control" id="order-delivery">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="order-notes" class="form-label">Notes</label>
+                            <textarea class="form-control" id="order-notes" rows="2"></textarea>
+                        </div>
+                        
+                        <div class="d-flex justify-content-between align-items-center mb-3">
+                            <h6>Order Items</h6>
+                            <button type="button" class="btn btn-sm btn-success" id="add-order-item">Add Item</button>
+                        </div>
+                        
+                        <div id="order-items"></div>
+                        
+                        <div class="text-right mt-3">
+                            <h5>Total: <span id="order-total">$0.00</span></h5>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" onclick="Orders.closeOrderModal()">Cancel</button>
+                    <button type="submit" form="order-form" class="btn btn-primary">Create Order</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
