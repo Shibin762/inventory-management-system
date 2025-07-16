@@ -1,0 +1,64 @@
+{
+  "name": "inventory-management-system",
+  "version": "1.0.0",
+  "description": "Inventory Management System for TechSupply Pro",
+  "main": "backend/src/server.js",
+  "scripts": {
+    "start": "node backend/src/server.js",
+    "dev": "nodemon backend/src/server.js",
+    "test": "jest",
+    "test:watch": "jest --watch",
+    "test:coverage": "jest --coverage",
+    "db:init": "node backend/src/scripts/initDb.js",
+    "db:seed": "node backend/src/scripts/seedData.js",
+    "lint": "eslint backend/src/**/*.js"
+  },
+  "keywords": ["inventory", "management", "sqlite", "api"],
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "sqlite3": "^5.1.6",
+    "bcrypt": "^5.1.1",
+    "jsonwebtoken": "^9.0.2",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "compression": "^1.7.4",
+    "helmet": "^7.0.0",
+    "morgan": "^1.10.0",
+    "@sendgrid/mail": "^7.7.0",
+    "@slack/web-api": "^6.9.0",
+    "axios": "^1.5.0",
+    "express-rate-limit": "^6.10.0",
+    "multer": "^1.4.5-lts.1",
+    "csv-parser": "^3.0.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "supertest": "^6.3.3",
+    "nodemon": "^3.0.1",
+    "eslint": "^8.48.0"
+  },
+  "jest": {
+    "testEnvironment": "node",
+    "coverageDirectory": "coverage",
+    "collectCoverageFrom": [
+      "backend/src/**/*.js",
+      "!backend/src/scripts/**",
+      "!backend/src/server.js"
+    ],
+    "testMatch": [
+      "**/tests/**/*.test.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 80,
+        "functions": 80,
+        "lines": 80,
+        "statements": 80
+      }
+    },
+    "testTimeout": 10000
+  }
+}

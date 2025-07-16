@@ -1,0 +1,747 @@
+<!-- Enhanced Dashboard Page with Modern Components -->
+<div id="dashboard-page" class="page">
+    <div class="container-fluid">
+        <!-- Animated Welcome Header -->
+        <div class="welcome-header slide-up">
+            <h1 class="text-gradient">Welcome back, <span id="user-name">Admin</span>! 👋</h1>
+            <p class="text-muted">Here's what's happening with your inventory today.</p>
+        </div>
+        
+        <!-- Quick Actions Bar -->
+        <div class="quick-actions mb-4 fade-in">
+            <button class="btn btn-primary" onclick="Products.showProductModal()">
+                <span class="btn-icon">➕</span> Add Product
+            </button>
+            <button class="btn btn-secondary" onclick="Orders.showOrderModal()">
+                <span class="btn-icon">📦</span> Create Order
+            </button>
+            <button class="btn btn-info" onclick="Reports.quickReport()">
+                <span class="btn-icon">📊</span> Quick Report
+            </button>
+            <button class="btn btn-success" onclick="Dashboard.exportData()">
+                <span class="btn-icon">💾</span> Export Data
+            </button>
+        </div>
+        
+        <!-- Enhanced Statistics Cards -->
+        <div class="stats-grid">
+            <div class="stat-card hover-scale">
+                <div class="stat-icon">📦</div>
+                <div class="stat-value counter" data-target="0" id="stat-total-products">0</div>
+                <div class="stat-label">Total Products</div>
+                <div class="stat-trend trend-up">↑ 12% from last month</div>
+            </div>
+            <div class="stat-card hover-scale">
+                <div class="stat-icon">⚠️</div>
+                <div class="stat-value stock-low counter" data-target="0" id="stat-low-stock">0</div>
+                <div class="stat-label">Low Stock Items</div>
+                <div class="stat-trend trend-down">↓ 5% from last week</div>
+            </div>
+            <div class="stat-card hover-scale">
+                <div class="stat-icon">❌</div>
+                <div class="stat-value stock-out counter" data-target="0" id="stat-out-of-stock">0</div>
+                <div class="stat-label">Out of Stock</div>
+                <div class="stat-trend">Need immediate attention</div>
+            </div>
+            <div class="stat-card hover-scale">
+                <div class="stat-icon">💰</div>
+                <div class="stat-value" id="stat-inventory-value">$0</div>
+                <div class="stat-label">Inventory Value</div>
+                <div class="stat-trend trend-up">↑ 8% growth</div>
+            </div>
+            <div class="stat-card hover-scale">
+                <div class="stat-icon">🏢</div>
+                <div class="stat-value counter" data-target="0" id="stat-active-suppliers">0</div>
+                <div class="stat-label">Active Suppliers</div>
+                <div class="stat-trend">2 new this month</div>
+            </div>
+            <div class="stat-card hover-scale">
+                <div class="stat-icon">📋</div>
+                <div class="stat-value counter" data-target="0" id="stat-pending-orders">0</div>
+                <div class="stat-label">Pending Orders</div>
+                <div class="stat-trend">Process today</div>
+            </div>
+        </div>
+        
+        <!-- Interactive Charts Row -->
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card chart-card">
+                    <div class="card-header">
+                        <h5 class="card-title">
+                            <span class="title-icon">📊</span> Stock Levels by Category
+                        </h5>
+                        <div class="card-actions">
+                            <button class="btn-icon" onclick="Dashboard.refreshChart('stock')">🔄</button>
+                            <button class="btn-icon" onclick="Dashboard.fullscreenChart('stock')">⛶</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="stock-levels-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="card chart-card">
+                    <div class="card-header">
+                        <h5 class="card-title">
+                            <span class="title-icon">📈</span> Monthly Orders Trend
+                        </h5>
+                        <div class="card-actions">
+                            <button class="btn-icon" onclick="Dashboard.refreshChart('orders')">🔄</button>
+                            <button class="btn-icon" onclick="Dashboard.fullscreenChart('orders')">⛶</button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="chart-container">
+                            <canvas id="monthly-orders-chart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Activity Timeline and Alerts -->
+        <div class="row mt-4">
+            <div class="col-md-8">
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="card-title">
+                            <span class="title-icon">🚨</span> Low Stock Alerts
+                        </h5>
+                        <span class="badge badge-danger pulse" id="alert-count">5</span>
+                    </div>
+                    <div class="card-body" id="low-stock-alerts">
+                        <div class="alert-item">
+                            <div class="alert-icon">⚠️</div>
+                            <div class="alert-content">
+                                <h6>Dell Latitude 5520</h6>
+                                <p>Current stock: <span class="text-danger">3</span> | Reorder level: 5</p>
+                                <button class="btn btn-sm btn-warning">Create Order</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card activity-card">
+                    <div class="card-header">
+                        <h5 class="card-title">
+                            <span class="title-icon">⏰</span> Recent Activity
+                        </h5>
+                    </div>
+                    <div class="card-body" id="recent-activity">
+                        <div class="timeline">
+                            <div class="timeline-item">
+                                <div class="timeline-marker"></div>
+                                <div class="timeline-content">
+                                    <p class="timeline-time">2 minutes ago</p>
+                                    <p>Product "Laptop" stock updated</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Enhanced CSS Additions -->
+<style>
+/* Welcome Header */
+.welcome-header {
+    margin-bottom: 2rem;
+    padding: 2rem;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    border-radius: var(--radius-xl);
+    text-align: center;
+}
+
+.welcome-header h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+/* Quick Actions Bar */
+.quick-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn-icon {
+    margin-right: 0.5rem;
+    font-size: 1.2em;
+}
+
+/* Enhanced Stat Cards */
+.stat-card {
+    position: relative;
+    padding-top: 3rem;
+}
+
+.stat-icon {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 2rem;
+    opacity: 0.3;
+}
+
+.stat-trend {
+    font-size: 0.75rem;
+    margin-top: 0.5rem;
+    opacity: 0.8;
+}
+
+.trend-up {
+    color: var(--success);
+}
+
+.trend-down {
+    color: var(--danger);
+}
+
+/* Chart Cards */
+.chart-card .card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.btn-icon {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    opacity: 0.6;
+    transition: all var(--transition-base);
+    padding: 0.25rem;
+    border-radius: var(--radius-md);
+}
+
+.btn-icon:hover {
+    opacity: 1;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+.title-icon {
+    margin-right: 0.5rem;
+}
+
+/* Alert Items */
+.alert-item {
+    display: flex;
+    gap: 1rem;
+    padding: 1rem;
+    background: rgba(255, 193, 7, 0.1);
+    border-radius: var(--radius-lg);
+    margin-bottom: 1rem;
+    transition: all var(--transition-base);
+}
+
+.alert-item:hover {
+    transform: translateX(5px);
+    box-shadow: var(--shadow-md);
+}
+
+.alert-icon {
+    font-size: 2rem;
+}
+
+.alert-content h6 {
+    margin: 0 0 0.5rem 0;
+    font-weight: 700;
+}
+
+/* Timeline */
+.timeline {
+    position: relative;
+    padding-left: 2rem;
+}
+
+.timeline::before {
+    content: '';
+    position: absolute;
+    left: 0.5rem;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: var(--gradient-primary);
+}
+
+.timeline-item {
+    position: relative;
+    margin-bottom: 1.5rem;
+}
+
+.timeline-marker {
+    position: absolute;
+    left: -1.5rem;
+    top: 0.25rem;
+    width: 1rem;
+    height: 1rem;
+    background: var(--gradient-primary);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.timeline-time {
+    font-size: 0.75rem;
+    color: var(--text-tertiary);
+    margin-bottom: 0.25rem;
+}
+
+/* Counter Animation */
+.counter {
+    display: inline-block;
+}
+
+/* Loading Animation for Cards */
+.card-loading {
+    position: relative;
+    overflow: hidden;
+}
+
+.card-loading::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+    animation: shimmer 2s infinite;
+}
+
+@keyframes shimmer {
+    100% {
+        left: 100%;
+    }
+}
+
+/* Hover Effects */
+.hover-lift {
+    transition: all var(--transition-base);
+}
+
+.hover-lift:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+/* Gradient Borders */
+.gradient-border {
+    position: relative;
+    background: var(--bg-primary);
+    border-radius: var(--radius-xl);
+    padding: 2px;
+}
+
+.gradient-border::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: var(--gradient-primary);
+    border-radius: inherit;
+    z-index: -1;
+}
+
+/* Floating Action Button */
+.fab {
+    position: fixed;
+    bottom: 2rem;
+    right: 5rem;
+    width: 3.5rem;
+    height: 3.5rem;
+    border-radius: 50%;
+    background: var(--gradient-primary);
+    color: white;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    box-shadow: var(--shadow-lg);
+    transition: all var(--transition-base);
+    z-index: 999;
+}
+
+.fab:hover {
+    transform: scale(1.1);
+    box-shadow: var(--shadow-xl);
+}
+
+/* Notification Badge Animation */
+.badge.pulse {
+    animation: pulse-badge 2s infinite;
+}
+
+@keyframes pulse-badge {
+    0% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(239, 68, 68, 0);
+    }
+}
+</style>
+
+<!-- Enhanced JavaScript for Animations -->
+<script>
+// Animated Counter
+function animateCounters() {
+    const counters = document.querySelectorAll('.counter');
+    
+    counters.forEach(counter => {
+        const target = parseInt(counter.getAttribute('data-target'));
+        const duration = 2000; // 2 seconds
+        const increment = target / (duration / 16); // 60fps
+        let current = 0;
+        
+        const updateCounter = () => {
+            current += increment;
+            if (current < target) {
+                counter.textContent = Math.floor(current);
+                requestAnimationFrame(updateCounter);
+            } else {
+                counter.textContent = target;
+            }
+        };
+        
+        updateCounter();
+    });
+}
+
+// Intersection Observer for Animations
+const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -100px 0px'
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('animate-in');
+            if (entry.target.classList.contains('counter')) {
+                animateCounters();
+            }
+        }
+    });
+}, observerOptions);
+
+// Observe all animatable elements
+document.addEventListener('DOMContentLoaded', () => {
+    const animatableElements = document.querySelectorAll('.fade-in, .slide-up, .stat-card');
+    animatableElements.forEach(el => observer.observe(el));
+});
+
+// Add ripple effect to buttons
+document.addEventListener('click', (e) => {
+    if (e.target.classList.contains('btn')) {
+        const ripple = document.createElement('span');
+        ripple.className = 'ripple';
+        e.target.appendChild(ripple);
+        
+        const x = e.clientX - e.target.offsetLeft;
+        const y = e.clientY - e.target.offsetTop;
+        
+        ripple.style.left = `${x}px`;
+        ripple.style.top = `${y}px`;
+        
+        setTimeout(() => ripple.remove(), 600);
+    }
+});
+
+// Parallax effect on scroll
+window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const parallax = document.querySelector('.welcome-header');
+    if (parallax) {
+        parallax.style.transform = `translateY(${scrolled * 0.5}px)`;
+    }
+});
+</script>
+
+<!-- Additional Modern Components -->
+
+<!-- Floating Action Button -->
+<button class="fab" onclick="showQuickAdd()">
+    <span>+</span>
+</button>
+
+<!-- Modern Product Card Design -->
+<div class="product-card hover-lift">
+    <div class="product-image">
+        <img src="https://via.placeholder.com/300x200" alt="Product">
+        <div class="product-overlay">
+            <button class="btn btn-primary">Quick View</button>
+        </div>
+    </div>
+    <div class="product-info">
+        <h4 class="product-name">Dell Latitude 5520</h4>
+        <p class="product-sku">SKU: LAP-001</p>
+        <div class="product-price">$1,299.99</div>
+        <div class="product-stock">
+            <span class="badge badge-success">In Stock (15)</span>
+        </div>
+    </div>
+</div>
+
+<!-- Modern Table Design -->
+<div class="modern-table">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    <input type="checkbox" class="form-check">
+                </th>
+                <th>Product <span class="sort-icon">↕</span></th>
+                <th>SKU <span class="sort-icon">↕</span></th>
+                <th>Price <span class="sort-icon">↕</span></th>
+                <th>Stock <span class="sort-icon">↕</span></th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr class="table-row">
+                <td><input type="checkbox" class="form-check"></td>
+                <td>
+                    <div class="product-cell">
+                        <img src="https://via.placeholder.com/40" alt="Product" class="product-thumb">
+                        <span>Dell Latitude 5520</span>
+                    </div>
+                </td>
+                <td>LAP-001</td>
+                <td>$1,299.99</td>
+                <td>
+                    <div class="stock-indicator">
+                        <div class="stock-bar">
+                            <div class="stock-fill" style="width: 75%"></div>
+                        </div>
+                        <span>15/20</span>
+                    </div>
+                </td>
+                <td><span class="badge badge-success">In Stock</span></td>
+                <td>
+                    <div class="action-buttons">
+                        <button class="action-btn" title="View">👁️</button>
+                        <button class="action-btn" title="Edit">✏️</button>
+                        <button class="action-btn" title="Delete">🗑️</button>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<style>
+/* Product Card Styles */
+.product-card {
+    background: white;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+    transition: all var(--transition-base);
+    max-width: 300px;
+}
+
+.product-image {
+    position: relative;
+    overflow: hidden;
+    height: 200px;
+}
+
+.product-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform var(--transition-base);
+}
+
+.product-card:hover .product-image img {
+    transform: scale(1.1);
+}
+
+.product-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+.product-card:hover .product-overlay {
+    opacity: 1;
+}
+
+.product-info {
+    padding: 1.5rem;
+}
+
+.product-name {
+    margin: 0 0 0.5rem 0;
+    font-size: 1.125rem;
+    font-weight: 700;
+}
+
+.product-sku {
+    color: var(--text-tertiary);
+    font-size: 0.875rem;
+    margin: 0 0 1rem 0;
+}
+
+.product-price {
+    font-size: 1.5rem;
+    font-weight: 800;
+    color: var(--primary);
+    margin-bottom: 0.5rem;
+}
+
+/* Modern Table Styles */
+.modern-table {
+    background: white;
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.modern-table .table {
+    margin: 0;
+}
+
+.sort-icon {
+    opacity: 0.3;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: opacity var(--transition-base);
+}
+
+th:hover .sort-icon {
+    opacity: 1;
+}
+
+.form-check {
+    width: 1.25rem;
+    height: 1.25rem;
+    cursor: pointer;
+}
+
+.product-cell {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.product-thumb {
+    width: 40px;
+    height: 40px;
+    border-radius: var(--radius-md);
+    object-fit: cover;
+}
+
+.stock-indicator {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.stock-bar {
+    width: 60px;
+    height: 6px;
+    background: var(--gray-200);
+    border-radius: var(--radius-full);
+    overflow: hidden;
+}
+
+.stock-fill {
+    height: 100%;
+    background: var(--gradient-success);
+    transition: width var(--transition-base);
+}
+
+.action-buttons {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.action-btn {
+    width: 2rem;
+    height: 2rem;
+    border: none;
+    background: var(--gray-100);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--transition-base);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-btn:hover {
+    background: var(--primary);
+    transform: scale(1.1);
+}
+
+/* Ripple Effect */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.5);
+    transform: scale(0);
+    animation: ripple-animation 0.6s ease-out;
+    pointer-events: none;
+}
+
+@keyframes ripple-animation {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+
+/* Tooltip */
+[title] {
+    position: relative;
+}
+
+[title]:hover::after {
+    content: attr(title);
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: var(--gray-900);
+    color: white;
+    padding: 0.25rem 0.5rem;
+    border-radius: var(--radius-md);
+    font-size: 0.75rem;
+    white-space: nowrap;
+    z-index: 1000;
+    margin-bottom: 0.5rem;
+}
+</style>
