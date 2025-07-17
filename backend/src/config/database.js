@@ -163,7 +163,7 @@ function initializeDatabase() {
 }
 
 function createDefaultData() {
-  const bcrypt = require('bcrypt');
+  const bcrypt = require('bcryptjs');
   
   // Create default admin user
   bcrypt.hash('admin123', 10, (err, hash) => {

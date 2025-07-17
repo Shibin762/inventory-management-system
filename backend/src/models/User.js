@@ -1,6 +1,6 @@
 // backend/src/models/User.js
 const db = require('../config/database');
-const bcrypt = require('bcrypt');
+const bcrypt = require('bcryptjs');
 const { saltRounds } = require('../config/auth');
 
 class User {
